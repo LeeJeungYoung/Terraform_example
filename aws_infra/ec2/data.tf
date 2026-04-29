@@ -1,0 +1,28 @@
+
+data "aws_vpc" "aws03_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.prefix}-vpc"]
+  }
+}
+
+data "aws_subnet" "aws03_public_subnet" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.prefix}-public-subnet-1"]
+  }
+}
+
+data "aws_security_group" "aws03_ssh_sg" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.prefix}-ssh-sg"]
+  }
+}
+
+data "aws_security_group" "aws03_http_sg" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.prefix}-http-sg"]
+  }
+}
