@@ -2,6 +2,11 @@ resource "aws_instance" "aws03_jenkins_server" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   key_name               = var.key_name
+  root_block_device {
+    volume_size = 25
+    volume_type = "gp3"
+    delete_on_termination = true
+  }
   
   # network 모듈에서 생성한 NAT 게이트웨이와 연결된 Private Subnet 1번 사용
   subnet_id              = data.aws_subnets.aws03_private_subnets.ids[0]
@@ -23,6 +28,8 @@ resource "aws_instance" "aws03_jenkins_server" {
               sudo systemctl enable amazon-ssm-agent
               sudo systemctl start amazon-ssm-agent
 
+              sudo apt install -y zip
+              
               # 1. 호스트 OS용 Docker 설치
               ${file("${path.module}/user_data/install-docker.sh")}
 
