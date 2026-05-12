@@ -1,4 +1,3 @@
-
 variable "region" {
   type = string
 }
@@ -22,3 +21,13 @@ variable "private_subnet_cidr_blocks" {
 variable "prefix" {
   type = string
 }
+EOF]
+
+
+
+
+
+
+
+
+

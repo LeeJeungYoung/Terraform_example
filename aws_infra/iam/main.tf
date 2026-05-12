@@ -35,6 +35,12 @@ resource "aws_iam_role_policy_attachment" "aws03_s3_attach" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
+# [추가] EC2 관리 권한: 젠킨스가 WAS 인스턴스나 ASG 상태를 조회하기 위해 필요
+resource "aws_iam_role_policy_attachment" "aws03_ec2_management" {
+  role       = aws_iam_role.aws03_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+
 resource "aws_iam_instance_profile" "aws03_ec2_instance_profile" {
   name = "${var.prefix}-ec2-instance-profile"
   role = aws_iam_role.aws03_ec2_role.name

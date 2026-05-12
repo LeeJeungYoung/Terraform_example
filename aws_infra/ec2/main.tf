@@ -48,6 +48,7 @@ resource "null_resource" "aws03_delay" {
 resource "aws_ami_from_instance" "aws03_ami" {
   name               = "${var.prefix}-instance-ami"
   source_instance_id = aws_instance.aws03_instance.id
+  snapshot_without_reboot = true
   depends_on = [null_resource.aws03_delay]
   tags = {
     Name = "${var.prefix}-instance-ami"
