@@ -1,3 +1,3 @@
 # Terraform_example
 
-aws test
+ terraform backend
