@@ -4,8 +4,8 @@ resource "aws_lb" "aws03_alb" {
   name               = "${var.prefix}-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.aws03_http_sg.id]
-  subnets            = data.aws_subnets.aws03_public_subnets.ids
+  security_groups = [data.terraform_remote_state.network.outputs.http_sg_id]
+  subnets = data.terraform_remote_state.network.outputs.public_subnet_ids
 
   tags = {
     Name = "${var.prefix}-alb"
@@ -16,7 +16,7 @@ resource "aws_lb_target_group" "aws03_alb_was_group" {
   name     = "${var.prefix}-alb-was-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = data.aws_vpc.aws03_vpc.id
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_id
 
   health_check {
     path                = "/"
@@ -58,7 +58,7 @@ resource "aws_lb_target_group" "aws03_alb_jenkins_group" {
   name     = "${var.prefix}-alb-jenkins-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = data.aws_vpc.aws03_vpc.id
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_id
 
   health_check {
     path                = "/login"
